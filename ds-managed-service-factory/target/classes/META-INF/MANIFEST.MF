@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bnd-LastModified: 1434039354403
+Build-Jdk: 1.7.0_79
+Built-By: brysmith
+Bundle-ManifestVersion: 2
+Bundle-Name: DevNation :: DS :: Managed Service Factory
+Bundle-SymbolicName: org.dn.ds.managed.service.factory
+Bundle-Version: 1.0.0.SNAPSHOT
+Created-By: Apache Maven Bundle Plugin
+Export-Package: org.dn.ds.managed.service.factory;version="1.0.0.SNAPSHO
+ T"
+Import-Package: org.slf4j;version="[1.7,2)"
+Service-Component: OSGI-INF/org.dn.ds.managed.service.factory.ManagedSer
+ viceFactoryComponent.xml,OSGI-INF/org.dn.ds.managed.service.factory.pro
+ vider.ManagedServiceFactoryProvider.xml
+Tool: Bnd-2.1.0.20130426-122213
