@@ -1,4 +1,4 @@
-package org.dn.ds.simple.message;
+package org.dn.ds.simple.service.provider;
 
 public class MessageGenerator {
 	

@@ -4,7 +4,7 @@ package org.dn.ds.simple;
 import static org.junit.Assert.*;
 import junit.framework.Assert;
 
-import org.dn.ds.simple.message.MessageGenerator;
+import org.dn.ds.simple.service.provider.MessageGenerator;
 import org.junit.Test;
  
 public class TestMessageGenerator {

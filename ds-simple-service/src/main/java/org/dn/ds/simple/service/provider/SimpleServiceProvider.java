@@ -23,16 +23,21 @@ import org.slf4j.LoggerFactory;
 @Component
 public class SimpleServiceProvider implements SimpleService {
     private static final Logger LOGGER = LoggerFactory.getLogger(SimpleServiceProvider.class);
+    
+    MessageGenerator msgGenerator = new MessageGenerator();
 
     @Override
     public void sayHello() {
-        LOGGER.info("Hello component");
-        LOGGER.info("Hello again component");   
+        //LOGGER.info("Hello component");
+        //LOGGER.info("Hello again component");
+    	LOGGER.info(msgGenerator.getHelloGreeting());
+    	LOGGER.info(msgGenerator.getHelloGreeting());
     }
 
     @Override
     public void sayGoodbye() {
-        LOGGER.info("Goodbye component");
+        //LOGGER.info("Goodbye component");
+    	LOGGER.info(msgGenerator.getGoodbyeGreeting());
     }
 
 }
