@@ -43,8 +43,6 @@
         <module>ds-simple-component</module>
         <module>ds-simple-service</module>
         <module>ds-simple-service-component</module>
-        <module>ds-managed-service</module>
-        <module>ds-managed-service-factory</module>
     </modules>
     <dependencyManagement>
         <dependencies>
@@ -101,6 +99,12 @@
                 <version>1.7.3</version>
                 <scope>provided</scope>
             </dependency>
+            <dependency>
+            	<groupId>junit</groupId>
+            	<artifactId>junit</artifactId>
+            	<version>4.11</version>
+            	<scope>test</scope>
+       		</dependency>
         </dependencies>
     </dependencyManagement>
     <dependencies>
