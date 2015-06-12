@@ -43,6 +43,7 @@
         <module>ds-simple-component</module>
         <module>ds-simple-service</module>
         <module>ds-simple-service-component</module>
+        <module>features</module>
     </modules>
     <dependencyManagement>
         <dependencies>
