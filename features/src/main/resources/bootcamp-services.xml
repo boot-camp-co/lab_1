@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<features name="bootcamp-services">
+  <feature name="ds-services">
+    <bundle>mvn:org.dn.ds/org.dn.ds.simple.service/1.0.0-SNAPSHOT</bundle>
+    <bundle>mvn:org.dn.ds/org.dn.ds.simple.component/1.0.0-SNAPSHOT</bundle>
+    <bundle>mvn:org.dn.ds/org.dn.ds.simple.service.component/1.0.0-SNAPSHOT</bundle>
+  </feature>
+</features>
