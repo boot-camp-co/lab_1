@@ -45,6 +45,7 @@
 
     <modules>
         <module>ds-testsender</module>
+        <module>ds-testreceiver</module>
         <module>features</module>
     </modules>
     <dependencyManagement>

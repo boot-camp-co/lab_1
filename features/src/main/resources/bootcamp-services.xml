@@ -3,4 +3,7 @@
    <feature name="orderedBrokerServices">
     <bundle>mvn:org.dn.ds/org.dn.ds.testsender/1.0.0-SNAPSHOT</bundle>
   </feature>
+  <feature name="orderedBrokerReceiver">
+    <bundle>mvn:org.dn.ds/org.dn.ds.testreceiver/1.0.0-SNAPSHOT</bundle>
+  </feature>
 </features>

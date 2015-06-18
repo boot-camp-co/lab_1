@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camel="http://camel.apache.org/schema/spring"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
+
+	<context:property-placeholder
+		properties-ref="properties"/>
+
+
+	<camelContext xmlns="http://camel.apache.org/schema/spring">
+
+
+		<route>
+			<from uri="activemq1:queue:org.jboss.integration.amq.queue.advisories.test.bygroup" />
+			<log message="${in.headers.JMSXGroupID}:${in.headers.JMSXGroupSeq}  - Received Messsage ${in.headers.JMSXGroupSeq} for group ${in.headers.JMSXGroupID}" />
+		</route>
+
+		<route>
+			<from uri="activemq2:queue:org.jboss.integration.amq.queue.advisories.test.bygroup" />
+			<log message="${in.headers.JMSXGroupID}:${in.headers.JMSXGroupSeq}  - Received Messsage ${in.headers.JMSXGroupSeq} for group ${in.headers.JMSXGroupID}" />
+		</route>
+
+		<route>
+			<from uri="activemq3:queue:org.jboss.integration.amq.queue.advisories.test.bygroup" />
+			<log message="${in.headers.JMSXGroupID}:${in.headers.JMSXGroupSeq}  - Received Messsage ${in.headers.JMSXGroupSeq} for group ${in.headers.JMSXGroupID}" />
+		</route>
+
+
+
+	</camelContext>
+
+	
+
+	<bean id="activemq1" class="org.apache.activemq.camel.component.ActiveMQComponent">
+		<property name="connectionFactory" ref="connectionFactory1" />
+	</bean>
+
+	<bean id="connectionFactory1" class="org.apache.activemq.ActiveMQConnectionFactory">
+		<!-- 61616,61617,61618 -->
+		<property name="brokerURL" value="nio://localhost:61616"/><!-- 61616 -->
+		<property name="userName" value="admin" />
+		<property name="password" value="admin" />
+	</bean>
+	
+	<bean id="activemq2" class="org.apache.activemq.camel.component.ActiveMQComponent">
+		<property name="connectionFactory" ref="connectionFactory2" />
+	</bean>
+
+	<bean id="connectionFactory2" class="org.apache.activemq.ActiveMQConnectionFactory">
+		<!-- 61616,61617,61618 -->
+		<property name="brokerURL" value="nio://localhost:61617" />
+		<property name="userName" value="admin" />
+		<property name="password" value="admin" />
+	</bean>
+	
+	<bean id="activemq3" class="org.apache.activemq.camel.component.ActiveMQComponent">
+		<property name="connectionFactory" ref="connectionFactory3" />
+	</bean>
+
+	<bean id="connectionFactory3" class="org.apache.activemq.ActiveMQConnectionFactory">
+		<!-- 61616,61617,61618 -->
+		<property name="brokerURL" value="nio://localhost:61618" />
+		<property name="userName" value="admin" />
+		<property name="password" value="admin" />
+	</bean>
+
+</beans>

@@ -27,37 +27,26 @@
 			<setBody>
 				<method ref="helloBean" method="hello" />
 			</setBody>
-			<log message="Messsage to Queue: ${body}" />
 			<to uri="activemq:queue:org.jboss.integration.amq.queue.advisories.test" />
 		</route>
 
-		<route>
-			<from
-				uri="activemqRec:queue:org.jboss.integration.amq.queue.advisories.test.bygroup" />
-			<log
-				message="Received Messsage from Queue: ${in.headers.JMSXGroupID} ${in.headers.JMSXGroupSeq} - ${body}" />
-		</route>
 
 		<!-- Route to split groups across brokers -->
 		<route>
 			<from
 				uri="activemq:queue:org.jboss.integration.amq.queue.advisories.test" />
 			<!-- replace with a hash function -->
-			<log message="Processing Messsage from Queue: ${in.headers.JMSXGroupID} ${in.headers.JMSXGroupSeq} - ${body}" />
 			<choice>
 				<when id="A">
 					<simple>${in.headers.JMSXGroupID} == "A"</simple>
-					<log message="Sending to A group broker"/>
 					<to	uri="activemq1:queue:org.jboss.integration.amq.queue.advisories.test.bygroup" />
 				</when>
 				<when id="B">
 					<simple>${in.headers.JMSXGroupID} == "B"</simple>
-					<log message="Sending to B group broker"/>
 					<to uri="activemq2:queue:org.jboss.integration.amq.queue.advisories.test.bygroup" />
 				</when>
 				<when id="C">
 					<simple>${in.headers.JMSXGroupID} == "C"</simple>
-					<log message="Sending to C group broker"/>
 					<to uri="activemq3:queue:org.jboss.integration.amq.queue.advisories.test.bygroup" />
 				</when>
 				<otherwise>
