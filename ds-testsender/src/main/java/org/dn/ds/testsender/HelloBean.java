@@ -1,4 +1,4 @@
-package org.dn.ds.org.dn.ds.testsender;
+package org.dn.ds.testsender;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -8,11 +8,13 @@ import java.util.Date;
  */
 public class HelloBean implements Hello {
 
-    private String say = "Hello World";
+    private String say = "Hello";
+    private int groupID;
+    private int sequence = 0;
 
     public String hello() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        return say + " at " + sdf.format(new Date());
+        return say + " this is message " + sequence + " at " + sdf.format(new Date());
     }
 
     public String getSay() {
@@ -21,5 +23,14 @@ public class HelloBean implements Hello {
 
     public void setSay(String say) {
         this.say = say;
+    }
+    
+    public int getGroup() {
+    	return groupID;
+    }
+    
+    public int getSequence() {
+    	sequence++;
+    	return sequence;
     }
 }

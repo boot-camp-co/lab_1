@@ -28,7 +28,7 @@
 	<!-- define properties here -->
     <osgix:cm-properties
         id="properties"
-        persistent-id="org.jboss.integration.amq">
+        persistent-id="org.dn.ds.test.sender">
     </osgix:cm-properties>
 
 </beans>

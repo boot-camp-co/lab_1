@@ -6,11 +6,11 @@
        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
-       
-       <context:property-placeholder
-        properties-ref="properties" />
 
-	<bean id="helloBean" class="org.jboss.integration.amq.advisories.HelloBean">
+	<context:property-placeholder
+		properties-ref="properties" />
+
+	<bean id="helloBean" class="org.dn.ds.testsender.HelloBean">
 		<property name="say" value="Hi from Camel" />
 	</bean>
 
@@ -36,10 +36,41 @@
 
 		<route>
 			<from
-				uri="activemq2:queue:org.jboss.integration.amq.queue.advisories.test" />
+				uri="activemqRec:queue:org.jboss.integration.amq.queue.advisories.test.bygroup" />
 			<log
-				message="Messsage from Queue: ${in.headers.JMSXGroupID} ${in.headers.JMSXGroupSeq} - ${body}" />
+				message="Received Messsage from Queue: ${in.headers.JMSXGroupID} ${in.headers.JMSXGroupSeq} - ${body}" />
 		</route>
+
+		<!-- Route to split groups across brokers -->
+		<route>
+			<from
+				uri="activemq:queue:org.jboss.integration.amq.queue.advisories.test" />
+			<!-- replace with a hash function -->
+			<log message="Processing Messsage from Queue: ${in.headers.JMSXGroupID} ${in.headers.JMSXGroupSeq} - ${body}" />
+			<choice>
+				<when>
+					<simple>${in.headers.JMSXGroupID} == "A"</simple>
+					<log message="Sending to A group broker"/>
+					<to	uri="activemq1:queue:org.jboss.integration.amq.queue.advisories.test.bygroup" />
+				</when>
+				<when id="B">
+					<simple>${in.headers.JMSXGroupID} == "B"</simple>
+					<log message="Sending to B group broker"/>
+					<to uri="activemq2:queue:org.jboss.integration.amq.queue.advisories.test.bygroup" />
+				</when>
+				<when id="C">
+					<simple>${in.headers.JMSXGroupID} == "C"</simple>
+					<log message="Sending to B group broker"/>
+					<to uri="activemq3:queue:org.jboss.integration.amq.queue.advisories.test.bygroup" />
+				</when>
+				<otherwise>
+					<log message="Sending to error queue"/>
+					<to uri="activemqRec:queue:org.jboss.integration.amq.queue.advisories.test.error" />
+				</otherwise>
+			</choice>
+		</route>
+
+
 	</camelContext>
 
 	<bean id="activemq" class="org.apache.activemq.camel.component.ActiveMQComponent">
@@ -47,23 +78,54 @@
 	</bean>
 
 	<bean id="connectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
-		<!-- property name="brokerURL" value="nio://localhost:61080?broker.persistent=true" / -->
-		<property
-            name="brokerURL"
-            value="${producer.url}" />
+		<!-- property name="brokerURL" value="nio://localhost:61080?broker.persistent=true" 
+			/ -->
+		<property name="brokerURL" value="${producer.url}" />
 		<property name="userName" value="admin" />
 		<property name="password" value="admin" />
 	</bean>
 	
-		<bean id="activemq2" class="org.apache.activemq.camel.component.ActiveMQComponent">
+	<bean id="activemqRec" class="org.apache.activemq.camel.component.ActiveMQComponent">
+		<property name="connectionFactory" ref="connectionFactoryRec" />
+	</bean>
+
+	<bean id="connectionFactoryRec" class="org.apache.activemq.ActiveMQConnectionFactory">
+		<!-- 61616,61617,61618 -->
+		<property name="brokerURL" value="${receiver.url}" />
+		<property name="userName" value="admin" />
+		<property name="password" value="admin" />
+	</bean>
+	
+
+	<bean id="activemq1" class="org.apache.activemq.camel.component.ActiveMQComponent">
+		<property name="connectionFactory" ref="connectionFactory1" />
+	</bean>
+
+	<bean id="connectionFactory1" class="org.apache.activemq.ActiveMQConnectionFactory">
+		<!-- 61616,61617,61618 -->
+		<property name="brokerURL" value="nio://localhost:61616" /><!-- 61616 -->
+		<property name="userName" value="admin" />
+		<property name="password" value="admin" />
+	</bean>
+	
+	<bean id="activemq2" class="org.apache.activemq.camel.component.ActiveMQComponent">
 		<property name="connectionFactory" ref="connectionFactory2" />
 	</bean>
 
 	<bean id="connectionFactory2" class="org.apache.activemq.ActiveMQConnectionFactory">
-		 <!-- 61616,61617,61618 -->
-		<property
-            name="brokerURL"
-            value="${receiver.url}" />
+		<!-- 61616,61617,61618 -->
+		<property name="brokerURL" value="nio://localhost:61617" />
+		<property name="userName" value="admin" />
+		<property name="password" value="admin" />
+	</bean>
+	
+	<bean id="activemq3" class="org.apache.activemq.camel.component.ActiveMQComponent">
+		<property name="connectionFactory" ref="connectionFactory3" />
+	</bean>
+
+	<bean id="connectionFactory3" class="org.apache.activemq.ActiveMQConnectionFactory">
+		<!-- 61616,61617,61618 -->
+		<property name="brokerURL" value="nio://localhost:61618" />
 		<property name="userName" value="admin" />
 		<property name="password" value="admin" />
 	</bean>

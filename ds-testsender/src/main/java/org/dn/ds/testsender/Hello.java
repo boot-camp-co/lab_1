@@ -1,4 +1,4 @@
-package org.dn.ds.org.dn.ds.testsender;
+package org.dn.ds.testsender;
 
 /**
  * An interface for implementing Hello services.
@@ -6,5 +6,6 @@ package org.dn.ds.org.dn.ds.testsender;
 public interface Hello {
 
     String hello();
-	
+	int getSequence();
 }
+
