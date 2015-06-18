@@ -77,7 +77,7 @@
 	<bean id="connectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
 		<!-- property name="brokerURL" value="nio://localhost:61080?broker.persistent=true" 
 			/ -->
-		<property name="brokerURL" value="${consumer.url}" />
+		<property name="brokerURL" value="${producer.url}" />
 		<property name="userName" value="admin" />
 		<property name="password" value="admin" />
 	</bean>
@@ -88,7 +88,7 @@
 
 	<bean id="connectionFactoryRec" class="org.apache.activemq.ActiveMQConnectionFactory">
 		<!-- 61616,61617,61618 -->
-		<property name="brokerURL" value="${producer.url}" />
+		<property name="brokerURL" value="${receiver.url}" />
 		<property name="userName" value="admin" />
 		<property name="password" value="admin" />
 	</bean>
