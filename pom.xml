@@ -29,7 +29,7 @@
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>DevNation :: DS</name>
+    <name>Test Ordered Broker</name>
     <properties>
         <maven.compiler.fork>true</maven.compiler.fork>
         <maven.compiler.source>1.7</maven.compiler.source>
@@ -37,12 +37,14 @@
         <maven.compiler.verbose>true</maven.compiler.verbose>
         <maven.compiler.maxmem>256m</maven.compiler.maxmem>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <pax.exam.version>3.6.0</pax.exam.version>
+        <geronimo.atinject-spec.version>1.0</geronimo.atinject-spec.version>
+        <karaf.version>2.3.0.redhat-610379</karaf.version>
+        <paxurl.version>2.0.0</paxurl.version>
     </properties>
 
     <modules>
-        <module>ds-simple-component</module>
-        <module>ds-simple-service</module>
-        <module>ds-simple-service-component</module>
+        <module>ds-testsender</module>
         <module>features</module>
     </modules>
     <dependencyManagement>
@@ -106,7 +108,82 @@
             	<version>4.11</version>
             	<scope>test</scope>
        		</dependency>
+       		    
+    <dependency>
+    	<groupId>org.springframework.osgi</groupId>
+    	<artifactId>spring-osgi-core</artifactId>
+    	<version>1.2.1</version>
+    </dependency>
+       		
+       		        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-core</artifactId>
+            <version>2.12.0.redhat-610379</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-spring</artifactId>
+            <version>2.12.0.redhat-610379</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-client</artifactId>
+            <version>5.9.0.redhat-610379</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-camel</artifactId>
+            <version>5.9.0.redhat-610379</version>
+        </dependency>
+
+        <!-- logging -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.7.5</version>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+        </dependency>
+
+    <!-- testing -->
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-test-spring</artifactId>
+            <version>2.12.0.redhat-610379</version>
+            <scope>test</scope>
+        </dependency>
+        
+        <dependency>
+        	<groupId>org.apache.activemq</groupId>
+        	<artifactId>activemq-core</artifactId>
+        	<version>5.5.1-fuse-01-13</version>
+        	<type>bundle</type>
+        </dependency>
+        <dependency>
+	<groupId>org.apache.activemq</groupId>
+	<artifactId>activemq-camel</artifactId>
+	<version>5.5.0</version>
+</dependency>
+        <dependency>
+        	<groupId>org.apache.activemq</groupId>
+        	<artifactId>activemq-camel</artifactId>
+        	<version>5.5.1-fuse-01-13</version>
+        	<type>bundle</type>
+        </dependency>
+
         </dependencies>
+        
+        
     </dependencyManagement>
     <dependencies>
         <dependency>
@@ -130,6 +207,23 @@
             </plugins>
         </pluginManagement>
         <plugins>
+                    <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.5.1</version>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-bundle-plugin</artifactId>
@@ -150,6 +244,13 @@
                         <_dsannotations-inherit>true</_dsannotations-inherit>
                     </instructions>
                 </configuration>
+            </plugin>
+            
+      <!-- allows the route to be ran via 'mvn camel:run' -->
+            <plugin>
+                <groupId>org.apache.camel</groupId>
+                <artifactId>camel-maven-plugin</artifactId>
+                <version>2.12.0.redhat-610379</version>
             </plugin>
         </plugins>
     </build>

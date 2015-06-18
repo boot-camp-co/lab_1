@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Bnd-LastModified: 1434118154691
+Bnd-LastModified: 1434567518146
 Build-Jdk: 1.7.0_79
 Built-By: brysmith
 Bundle-ManifestVersion: 2
