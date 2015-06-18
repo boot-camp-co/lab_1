@@ -28,7 +28,7 @@
 	<!-- define properties here -->
     <osgix:cm-properties
         id="properties"
-        persistent-id="org.dn.ds.test.sender">
+        persistent-id="org.dn.ds.testsender">
     </osgix:cm-properties>
 
 </beans>

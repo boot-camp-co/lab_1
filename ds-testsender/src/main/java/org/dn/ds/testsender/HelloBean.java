@@ -9,7 +9,7 @@ import java.util.Date;
 public class HelloBean implements Hello {
 
     private String say = "Hello";
-    private int groupID;
+    private String group = "A";
     private int sequence = 0;
 
     public String hello() {
@@ -25,8 +25,12 @@ public class HelloBean implements Hello {
         this.say = say;
     }
     
-    public int getGroup() {
-    	return groupID;
+    public void setGroup(String group) {
+    	this.group = group;
+    }
+    
+    public String getGroup() {
+    	return group;
     }
     
     public int getSequence() {

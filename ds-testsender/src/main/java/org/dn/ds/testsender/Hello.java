@@ -7,5 +7,6 @@ public interface Hello {
 
     String hello();
 	int getSequence();
+	String getGroup();
 }
 
